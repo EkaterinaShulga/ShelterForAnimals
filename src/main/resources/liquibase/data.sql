@@ -58,7 +58,7 @@ CREATE TABLE Pet_Photos
     pet_Photo_id BIGSERIAL  PRIMARY KEY,
     file_path     TEXT,
     file_size     BIGINT,
-    date_time          TIMESTAMP WITHOUT TIME ZONE,
+    date          DATE,
     status        int,
     chat_id       BIGSERIAL,
         record_id bigint REFERENCES Records (record_id) ON DELETE CASCADE

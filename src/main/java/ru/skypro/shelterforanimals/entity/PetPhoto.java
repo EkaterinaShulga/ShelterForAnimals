@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -18,7 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "PetPhotos")
+@Table(name = "Pet_Photos")
 public class PetPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class PetPhoto {
     private String filePath;
     private Integer fileSize;
 
-    private LocalDateTime dateTime;
+    private LocalDate date;
     private int status;
     private Long chatId;
 
@@ -60,7 +60,7 @@ public class PetPhoto {
                 "petPhotoId=" + petPhotoId +
                 ", filePath='" + filePath + '\'' +
                 ", fileSize=" + fileSize +
-                ", dateTime=" + dateTime +
+                ", dateTime=" + date +
                 ", status=" + status +
                 ", chatId=" + chatId +
                 '}';
