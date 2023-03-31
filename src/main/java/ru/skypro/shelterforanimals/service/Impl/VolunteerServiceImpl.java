@@ -47,13 +47,13 @@ public class VolunteerServiceImpl implements VolunteerService {
     }
 
     @Override
-    public Volunteer updateVolunteer(Volunteer volunteer) {
+    public void updateVolunteer(Volunteer volunteer) {
         log.info("updateVolunteer -  volunteerServiceImpl");
         Volunteer volunteerUpdate = volunteerRepository.findByChatId(volunteer.getChatId());
         volunteerUpdate.setStatus(volunteer.getStatus());
         volunteerUpdate.setChatId(volunteerUpdate.getChatId());
 
-        return volunteerRepository.save(volunteerUpdate);
+        volunteerRepository.save(volunteerUpdate);
 
     }
 
