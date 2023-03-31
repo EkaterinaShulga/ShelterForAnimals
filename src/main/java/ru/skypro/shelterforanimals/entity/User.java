@@ -8,13 +8,18 @@ import lombok.Setter;
 import java.util.Objects;
 
 
+/**
+ * User - a person who took a cat or dog from a shelter <br>
+ * the User is entered into the database <br>
+ */
+
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String userName;
     private String numberPhone;
@@ -22,7 +27,8 @@ public class User {
     private int status;
     private String petName;
 
-    public User(){}
+    public User() {
+    }
 
     @Override
     public boolean equals(Object o) {

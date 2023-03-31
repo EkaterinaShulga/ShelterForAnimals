@@ -7,14 +7,19 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+
+/**
+ * the Cat is entered into the database
+ */
+
 @Getter
 @Setter
 @Entity
-@Table(name = "cats")
+@Table(name = "Cats")
 public class Cat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;

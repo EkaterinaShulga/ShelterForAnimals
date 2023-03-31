@@ -8,5 +8,6 @@ import ru.skypro.shelterforanimals.entity.Volunteer;
 public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 
     Volunteer findByChatId(long chatId);
+
 }
 

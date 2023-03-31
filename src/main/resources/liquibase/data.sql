@@ -1,7 +1,7 @@
 -- liquibase formatted sql
 
 -- changeset LeonidB:1
-CREATE TABLE cats
+CREATE TABLE Cats
 (
     id        BIGSERIAL PRIMARY KEY,
     name      TEXT,
@@ -11,7 +11,7 @@ CREATE TABLE cats
     cat_Photo TEXT
 );
 
-CREATE TABLE clients
+CREATE TABLE Clients
 (
     id      BIGSERIAL PRIMARY KEY,
     chat_id BIGSERIAL,
@@ -19,18 +19,18 @@ CREATE TABLE clients
 );
 
 
-CREATE TABLE contacts
+CREATE TABLE Contacts
 (
     id            serial PRIMARY KEY,
     name          TEXT,
     number_phone  TEXT,
     date_time     TIMESTAMP WITHOUT TIME ZONE,
     client_status int,
-    id_client     bigint references clients (id) on delete cascade
+    id_client     bigint references Clients (id) on delete cascade
 
 );
 
-CREATE TABLE dogs
+CREATE TABLE Dogs
 (
     id        BIGSERIAL PRIMARY KEY,
     name      TEXT,
@@ -41,40 +41,33 @@ CREATE TABLE dogs
 
 );
 
-
-CREATE TABLE pet_Photos
-(
-    pet_Photo_id BIGSERIAL  PRIMARY KEY,
-    file_path     TEXT,
-    file_size     BIGINT,
-    status        int,
-    chat_id       BIGSERIAL
-
-);
-
-CREATE TABLE records
+CREATE TABLE Records
 (
     record_id          BIGSERIAL PRIMARY KEY,
     status             int,
     chat_id            BIGSERIAL,
-    date_time          TIMESTAMP WITHOUT TIME ZONE,
+    date               DATE,
     diet               TEXT,
     adaptation         TEXT,
-    change_in_behavior TEXT,
-        pet_Photo_id bigint REFERENCES pet_Photos (pet_Photo_id) ON DELETE CASCADE
+    change_in_behavior TEXT
 
 );
-CREATE TABLE reports
+
+CREATE TABLE Pet_Photos
 (
-    report_id BIGSERIAL PRIMARY KEY,
-    chat_id   BIGSERIAL,
-    status             int,
-    photo_id  bigint REFERENCES pet_Photos (pet_Photo_id) ON DELETE CASCADE,
-    record_id bigint REFERENCES records (record_id) ON DELETE CASCADE
+    pet_Photo_id BIGSERIAL  PRIMARY KEY,
+    file_path     TEXT,
+    file_size     BIGINT,
+    date_time          TIMESTAMP WITHOUT TIME ZONE,
+    status        int,
+    chat_id       BIGSERIAL,
+        record_id bigint REFERENCES Records (record_id) ON DELETE CASCADE
 
 );
 
-CREATE TABLE users
+
+
+CREATE TABLE Users
 (
     user_id      BIGSERIAL PRIMARY KEY,
     user_name    TEXT,
@@ -84,7 +77,7 @@ CREATE TABLE users
     pet_name     TEXT
 );
 
-CREATE TABLE volunteers
+CREATE TABLE Volunteers
 (
     id      BIGSERIAL PRIMARY KEY,
     name    TEXT,
@@ -93,5 +86,6 @@ CREATE TABLE volunteers
 );
 
 
-CREATE SEQUENCE IF NOT EXISTS hibernate_sequence;
+
+
 

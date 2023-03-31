@@ -6,20 +6,25 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Volunteer - employee of a shelter for cats or dogs <br>
+ * the Volunteer is entered into the database <br>
+ */
 
 @Getter
 @Setter
 @Entity
-@Table(name = "volunteers")
+@Table(name = "Volunteers")
 public class Volunteer {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     private String name;
     private int status;
     private long chatId;
 
-    public Volunteer(){}
+    public Volunteer() {
+    }
 
     @Override
     public boolean equals(Object o) {

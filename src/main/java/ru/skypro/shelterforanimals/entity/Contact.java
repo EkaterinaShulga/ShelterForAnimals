@@ -9,32 +9,32 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * information from the user for feedback from the shelter volunteer <br>
- * linked by foreign key with {@code Client(Entity)}
- * the contact is entered into the database <br>
+ * linked by foreign key with {@code Client(Entity)}<br>
+ * the Contact is entered into the database <br>
  */
 
 @Getter
 @Setter
 @Entity
-@Table(name = "contacts")
+@Table(name = "Contacts")
 public class Contact {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String numberPhone;
 
     private LocalDateTime dateTime;
 
-    private  int clientStatus;
+    private int clientStatus;
 
     @OneToOne()
     @JoinColumn(name = "id_client")
-    Client client;
+    private Client client;
 
-public Contact(){}
+    public Contact() {
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,7 +54,7 @@ public Contact(){}
         return
                 name + '\n' +
                         " телефон:  " + numberPhone + '\n' +
-                        " дата регистр: " + dateTime + '\n'+
+                        " дата регистр: " + dateTime + '\n' +
                         " статус " + clientStatus + '\n';
     }
 }

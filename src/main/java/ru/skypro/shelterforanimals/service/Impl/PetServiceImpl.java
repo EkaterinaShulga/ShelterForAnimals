@@ -1,7 +1,6 @@
 package ru.skypro.shelterforanimals.service.Impl;
 
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.PhotoSize;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +16,12 @@ import ru.skypro.shelterforanimals.service.PetPhotoService;
 import ru.skypro.shelterforanimals.service.PetService;
 import ru.skypro.shelterforanimals.service.RecordService;
 
-import java.io.IOException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ru.skypro.shelterforanimals.constants.BotButtonForShelterMenuEnum.BOT_ANSWER_NOT_SAVED_INFO_LOG;
+
+import static ru.skypro.shelterforanimals.constants.BotMessageEnum.BOT_ANSWER_NOT_SAVED_INFO_LOG;
 import static ru.skypro.shelterforanimals.constants.BotMessageEnum.SAVE_INFORMATION;
 import static ru.skypro.shelterforanimals.constants.BotMessageVolunteer.*;
 
@@ -35,10 +35,15 @@ public class PetServiceImpl implements PetService {
     private final CatRepository catRepository;
     private final DogRepository dogRepository;
     private final VolunteerRepository volunteerRepository;
-    private final PetPhotoService petPhotoService;
-    private final RecordService recordService;
     private final TelegramBot telegramBot;
 
+    /**
+     * method creates and save pet on the database<br>
+     * depending on the status of the volunteer,<br>
+     * a cat or a dog is saved to the database
+     *
+     * @param update - update from the bot
+     */
     @Override
     public void savePet(Update update) {
         log.info("Сохранение питомца в базе данных");
@@ -71,42 +76,25 @@ public class PetServiceImpl implements PetService {
                     telegramBot.execute(new SendMessage(chatId, SAVE_INFORMATION.getMessage()));
                     log.info("Данные сохранены в базе данных");
                 }
-            }else {
+            } else {
                 log.info("такой питомец уже есть в базе данных");
                 telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_PET_CAN_NOT_SAVE.getMessage()));
             }
 
         } else if (!matcher.matches()) {
             telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_PET_ERROR_IN_TEMPLATE.getMessage()));
-            log.info(BOT_ANSWER_NOT_SAVED_INFO_LOG.getText());
+            log.info(BOT_ANSWER_NOT_SAVED_INFO_LOG.getMessage());
         }
     }
-        /* //   try {
-                if (dogFromDataBase == null && status == 1) {
-                    saveDog(name, color, age, chatId);
-                    log.info("Данные сохранены в базе данных");
-                }
-                if (catFromBase == null && status == 2) {
-                    saveCat(name, color, age, chatId);
-                    Long recordId = recordService.findRecordId(update);
-                   // PhotoSize[] photos = update.message().photo();
-                   // petPhotoService.uploadPhoto(recordId, photos);
-                   // telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_PET_CAN_NOT_SAVE.getMessage()));
-                    log.info("Данные сохранены в базе данных");
-                } else {
-                    log.info("такой питомец уже есть в базе данных");
-                    telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_PET_CAN_NOT_SAVE.getMessage()));
-                }
-          //  } catch (NullPointerException e) {
-          //      log.info("волонтер не предоставил информацию о животном" + e);
-         //   } catch (NullPointerException e) {
-         //       throw new RuntimeException(e);
-            }
-        } else {
-            telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_PET_ERROR_IN_TEMPLATE.getMessage()));
-            log.warn(BOT_ANSWER_NOT_SAVED_INFO_LOG.getText());
-        }
-    }*/
+
+    /**
+     * * method creates and save dog
+     *
+     * @param name   - name dog
+     * @param color  - color dog
+     * @param age    -age dog
+     * @param chatId - chatId volunteer, who adds dog
+     */
 
     @Override
     public void saveDog(String name, String color, String age, Long chatId) {
@@ -119,6 +107,14 @@ public class PetServiceImpl implements PetService {
         dogRepository.save(dog);
     }
 
+    /**
+     * * method creates and save cat
+     *
+     * @param name   - name cat
+     * @param color  - color cat
+     * @param age    -age cat
+     * @param chatId - chatId volunteer, who adds cat
+     */
     @Override
     public void saveCat(String name, String color, String age, Long chatId) {
         log.info("saveCat - petServiceImpl");

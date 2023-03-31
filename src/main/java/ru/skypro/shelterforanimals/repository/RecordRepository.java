@@ -4,18 +4,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.skypro.shelterforanimals.entity.Record;
 
-import java.time.LocalDateTime;
-import java.util.LinkedList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
-    Record findByRecordId(long recordId);
-    LinkedList<Record> findAllRecordByChatId(long chatId);
-    List<Record> findAllRecordsByChatId(long chatId);
-    Record findRecordByChatId(long chatId);
-    List<Record> findRecordsByChatIdAndDateTime(long chatId, LocalDateTime dateTime);
+    Optional<Record> findById(Long recordId);
 
-    List<Record> findRecordsByStatus(int status);
+    Record findRecordByChatId(long chatId);
+
+    List<Record> findByChatId(Long chatIdUser);
+
+    Record findRecordByChatIdAndDate(Long chatIdUser, LocalDate date);
+
+    List<Record> getRecordsByStatus(int statusVolunteer);
+
 }

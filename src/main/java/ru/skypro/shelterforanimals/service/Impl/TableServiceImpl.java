@@ -1,27 +1,26 @@
 package ru.skypro.shelterforanimals.service.Impl;
 
-import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
 import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.skypro.shelterforanimals.service.TableService;
 
 import static ru.skypro.shelterforanimals.constants.BotButtonEnum.*;
-import static ru.skypro.shelterforanimals.constants.BotButtonForShelterMenuEnum.*;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class TableServiceImpl implements TableService {
 
-    private final TelegramBot telegramBot;
-
-    public TableServiceImpl(TelegramBot telegramBot) {//,ShelterRepository shelterRepository){
-        this.telegramBot = telegramBot;
-    }
+    /**
+     * start menu (for dog shelter) for the user
+     *
+     * @return InlineKeyboardMarkup
+     */
 
     @Override
-    // public InlineKeyboardMarkup ourMenuButtons() {
     public InlineKeyboardMarkup startMenuButtonsForShelterDog() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         var button1Info = new InlineKeyboardButton(BUTTON_INFO.getMessage());
@@ -37,10 +36,6 @@ public class TableServiceImpl implements TableService {
         button4Photo.callbackData(BUTTON_PET_PHOTO.getMessage());
         button5Help.callbackData(BUTTON_HELP.getMessage());
 
-        /* Данные кнопки будут располагаться друг под другом. Можно использоваться в линию
-           для этого необходимые кнопки можно перечислить в параметрах markup.addRow(b1, b2, b3, b4);
-           Тогда информация будет сжата по размеру кнопки
-        */
         markup.addRow(button1Info);
         markup.addRow(button2Instruction);
         markup.addRow(button3Record);
@@ -51,8 +46,12 @@ public class TableServiceImpl implements TableService {
 
     }
 
+    /**
+     * start menu (for cat shelter) for the user
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
-    //  public InlineKeyboardMarkup ourMenuCatButtons() {
     public InlineKeyboardMarkup startMenuButtonsForShelterCat() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         var button1Info = new InlineKeyboardButton(BUTTON_INFO.getMessage());
@@ -67,10 +66,6 @@ public class TableServiceImpl implements TableService {
         button4PetPhoto.callbackData(BUTTON_PET_PHOTO.getMessage());
         button5Help.callbackData(BUTTON_HELP.getMessage());
 
-        /* Данные кнопки будут располагаться друг под другом. Можно использоваться в линию
-           для этого необходимые кнопки можно перечислить в параметрах markup.addRow(b1, b2, b3, b4);
-           Тогда информация будет сжата по размеру кнопки
-        */
         markup.addRow(button1Info);
         markup.addRow(button2Instruction);
         markup.addRow(button3Record);
@@ -80,17 +75,21 @@ public class TableServiceImpl implements TableService {
         return markup;
     }
 
+    /**
+     * menu with information about the shelter(for dog) for the user
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
-    //  public InlineKeyboardMarkup makeButtonsForMenuStageOne() {//возвращает инфо в зависимости от приюта
     public InlineKeyboardMarkup menuButtonsWithInformationAboutShelterForDog() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        var buttonAboutShelter = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER.getText());
-        var buttonWorkTime = new InlineKeyboardButton(COMMAND_WORK_SCHEDULE_SHELTER.getText());
-        var buttonAddress = new InlineKeyboardButton(COMMAND_ADDRESS_SHELTER.getText());
-        var buttonWay = new InlineKeyboardButton(COMMAND_DRIVING_DIRECTIONS.getText());
-        var buttonSafety = new InlineKeyboardButton(COMMAND_SAFETY_SHELTER.getText());
-        var buttonContact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getText());
-        var buttonVolunteer = new InlineKeyboardButton(COMMAND_CALL_VOLUNTEER.getText());
+        var buttonAboutShelter = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage());
+        var buttonWorkTime = new InlineKeyboardButton(COMMAND_WORK_SCHEDULE_SHELTER.getMessage());
+        var buttonAddress = new InlineKeyboardButton(COMMAND_ADDRESS_SHELTER.getMessage());
+        var buttonWay = new InlineKeyboardButton(COMMAND_DRIVING_DIRECTIONS.getMessage());
+        var buttonSafety = new InlineKeyboardButton(COMMAND_SAFETY_SHELTER.getMessage());
+        var buttonContact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
+        var buttonVolunteer = new InlineKeyboardButton(COMMAND_CALL_VOLUNTEER.getMessage());
 
         buttonAboutShelter.callbackData("info");
         buttonWorkTime.callbackData("workTime");
@@ -110,18 +109,23 @@ public class TableServiceImpl implements TableService {
         return markup;
     }
 
+
+    /**
+     * menu with information about the shelter(for cat) for the user
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
-    // public InlineKeyboardMarkup makeButtonsForMenuStageOneCat() {
     public InlineKeyboardMarkup menuButtonsWithInformationAboutShelterForCat() {
         InlineKeyboardMarkup markupCat = new InlineKeyboardMarkup();
-        var buttonAboutShelter = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER.getText());
-        var buttonWorkTime = new InlineKeyboardButton(COMMAND_WORK_SCHEDULE_SHELTER.getText());
-        var buttonAddress = new InlineKeyboardButton(COMMAND_ADDRESS_SHELTER.getText());
-        var buttonWay = new InlineKeyboardButton(COMMAND_DRIVING_DIRECTIONS.getText());
+        var buttonAboutShelter = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage());
+        var buttonWorkTime = new InlineKeyboardButton(COMMAND_WORK_SCHEDULE_SHELTER.getMessage());
+        var buttonAddress = new InlineKeyboardButton(COMMAND_ADDRESS_SHELTER.getMessage());
+        var buttonWay = new InlineKeyboardButton(COMMAND_DRIVING_DIRECTIONS.getMessage());
         var buttonSecurityContact = new InlineKeyboardButton(COMMAND_SECURITY_CONTACT_CAT.getMessage());
-        var buttonSafety = new InlineKeyboardButton(COMMAND_SAFETY_SHELTER.getText());
-        var buttonContact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getText());
-        var buttonVolunteer = new InlineKeyboardButton(COMMAND_CALL_VOLUNTEER.getText());
+        var buttonSafety = new InlineKeyboardButton(COMMAND_SAFETY_SHELTER.getMessage());
+        var buttonContact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
+        var buttonVolunteer = new InlineKeyboardButton(COMMAND_CALL_VOLUNTEER.getMessage());
 
         buttonAboutShelter.callbackData("infoCat");
         buttonWorkTime.callbackData("workTimeCat");
@@ -143,8 +147,12 @@ public class TableServiceImpl implements TableService {
         return markupCat;
     }
 
+    /**
+     * menu with information about the rules of handling a dog for the user
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
-    //public InlineKeyboardMarkup makeButtonsForMenuStageTwo() {
     public InlineKeyboardMarkup menuButtonsWithInformationAboutGod() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
 
@@ -186,8 +194,14 @@ public class TableServiceImpl implements TableService {
         return markup;
     }
 
+
+    /**
+     * menu with information about the rules of handling a cat for the user
+     *
+     * @return InlineKeyboardMarkup
+     */
+
     @Override
-    // public InlineKeyboardMarkup makeButtonsForMenuStageTwoCat() {
     public InlineKeyboardMarkup menuButtonsWithInformationAboutCat() {
         InlineKeyboardMarkup markupCat = new InlineKeyboardMarkup();
 
@@ -223,6 +237,11 @@ public class TableServiceImpl implements TableService {
         return markupCat;
     }
 
+    /**
+     * menu with two buttons: user/volunteer
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
     public InlineKeyboardMarkup userStatusMenuButtons() {
         log.info("Кнопки выбора статуса Пользователь/Волонтер  - tableServiceImpl");
@@ -238,6 +257,11 @@ public class TableServiceImpl implements TableService {
         return markup;
     }
 
+    /**
+     * menu with two buttons: shelter for cat/shelter for dog - for user
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
     public InlineKeyboardMarkup shelterStatusMenuButtons() {
         log.info("Кнопки выбора приюта - volunteerServiceImpl");
@@ -253,33 +277,43 @@ public class TableServiceImpl implements TableService {
         return markup;
     }
 
+    /**
+     * menu with volunteer functionality
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
     public InlineKeyboardMarkup volunteerFunctionality() {
-        log.info("menuForCatVolunteer - volunteerServiceImpl");
+        log.info("volunteerFunctionality - tableServiceImpl");
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         var buttonCheckContacts = new InlineKeyboardButton(BUTTON_CHECK_CONTACT.getMessage());
         var buttonAddUser = new InlineKeyboardButton(BUTTON_ADD_USER.getMessage());
         var buttonCheckReports = new InlineKeyboardButton(BUTTON_CHECK_REPORTS.getMessage());
-     //   var buttonSendWarningAboutBadReport = new InlineKeyboardButton(BUTTON_BED_REPORT.getMessage());
-      //  var buttonMakeDecisionOnProbation = new InlineKeyboardButton(BUTTON_MAKE_DECISION_ON_PROBATION.getMessage());
+        var buttonMakeDecisionOnProbation = new InlineKeyboardButton(BUTTON_MESSAGE_FOR_USER.getMessage());
         var buttonAddPet = new InlineKeyboardButton(BUTTON_VOLUNTEER_ADD_PET.getMessage());
 
         buttonCheckContacts.callbackData(BUTTON_CHECK_CONTACT.getMessage());
         buttonAddUser.callbackData(BUTTON_ADD_USER.getMessage());
         buttonCheckReports.callbackData(BUTTON_CHECK_REPORTS.getMessage());
-      //  buttonSendWarningAboutBadReport.callbackData(BUTTON_BED_REPORT.getMessage());
-       // buttonMakeDecisionOnProbation.callbackData(BUTTON_MAKE_DECISION_ON_PROBATION.getMessage());
+        buttonMakeDecisionOnProbation.callbackData(BUTTON_MESSAGE_FOR_USER.getMessage());
         buttonAddPet.callbackData(BUTTON_VOLUNTEER_ADD_PET.getMessage());
 
         markup.addRow(buttonCheckContacts);
         markup.addRow(buttonAddUser);
         markup.addRow(buttonCheckReports);
-       // markup.addRow(buttonSendWarningAboutBadReport);
-      //  markup.addRow(buttonMakeDecisionOnProbation);
+        markup.addRow(buttonMakeDecisionOnProbation);
         markup.addRow(buttonAddPet);
 
         return markup;
     }
+
+
+    /**
+     * menu with two buttons: volunteer of the shelter for cats/<br>
+     * volunteer of the shelter for cats
+     *
+     * @return InlineKeyboardMarkup
+     */
 
     @Override
     public InlineKeyboardMarkup menuForVolunteer() {
@@ -299,24 +333,35 @@ public class TableServiceImpl implements TableService {
         return markup2;
     }
 
+    /**
+     * menu for the volunteer, a list of messages to notify the user
+     *
+     * @return InlineKeyboardMarkup
+     */
     @Override
-    public InlineKeyboardMarkup makeButtonsForMenuStageThreeForReport() {
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        String photo = " Фото питомца ";
-        String record = " Текстовый отчет  ";
+    public InlineKeyboardMarkup makeButtonsMessagesToUserAboutProbationPeriod() {
+        log.info("makeButtonsMessagesToUserAboutProbationPeriod - volunteerServiceImpl");
+        InlineKeyboardMarkup markup3 = new InlineKeyboardMarkup();
+        var buttonPassedProbationPeriod = new InlineKeyboardButton(BUTTON_PASSED_PROBATION_PERIOD.getMessage());
+        var buttonDidNotPassedProbationPeriod = new InlineKeyboardButton(BUTTON_DID_NOT_PASSED_PROBATION_PERIOD.getMessage());
+        var buttonExtraTime = new InlineKeyboardButton(BUTTON_EXTRA_TIME.getMessage());
+        var buttonBadRecord = new InlineKeyboardButton(BUTTON_BED_RECORD.getMessage());
 
-        var buttonPhoto = new InlineKeyboardButton(photo);
-        var buttonRecord = new InlineKeyboardButton(record);
+        buttonPassedProbationPeriod.callbackData(BUTTON_PASSED_PROBATION_PERIOD.getMessage());
+        buttonDidNotPassedProbationPeriod.callbackData(BUTTON_DID_NOT_PASSED_PROBATION_PERIOD.getMessage());
+        buttonExtraTime.callbackData(BUTTON_EXTRA_TIME.getMessage());
+        buttonBadRecord.callbackData(BUTTON_BED_RECORD.getMessage());
 
-        buttonPhoto.callbackData("photo");
-        buttonRecord.callbackData("record");
+        markup3.addRow(buttonPassedProbationPeriod);
+        markup3.addRow(buttonDidNotPassedProbationPeriod);
+        markup3.addRow(buttonExtraTime);
+        markup3.addRow(buttonBadRecord);
 
-        markup.addRow(buttonPhoto);
-        markup.addRow(buttonRecord);
 
-        log.info("Отправил меню третьего этапа");
-        return markup;
+        return markup3;
     }
+
+
 }
 
 

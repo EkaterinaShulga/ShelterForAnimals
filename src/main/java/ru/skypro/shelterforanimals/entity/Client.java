@@ -1,16 +1,23 @@
 package ru.skypro.shelterforanimals.entity;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
+
+/**
+ * the Client is entered into the database
+ */
+
+
 @Getter
 @Setter
 @Entity
-@Table(name = "clients")
+@Table(name = "Clients")
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private long chatId;
     private int status;
@@ -18,11 +25,6 @@ public class Client {
     public Client() {
     }
 
-    public Client(Long id, long chatId, int status) {
-        this.id = id;
-        this.chatId = chatId;
-        this.status = status;
-    }
 
     @Override
     public boolean equals(Object o) {

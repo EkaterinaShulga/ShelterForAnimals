@@ -22,15 +22,19 @@ public class DataCheck {
     private final CatButtonAnswers catButtonAnswers;
     private final VolunteerButtonAnswers volunteerButtonAnswers;
 
-
+    /**
+     * processes responses from the dog shelter menu buttons
+     * @param update
+     */
     public void checkDogButtonAnswer(Update update) {
         log.info("checkDogButtonAnswer - DataCheck");
         if (update.callbackQuery().data().equals(BUTTON_INFO.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_INSTRUCTION_DOG.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_RECORD.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_PET_PHOTO.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_HELP.getMessage())) {
             dogButtonAnswers.checkButtonAnswerDogs(update);
-        } else if (update.callbackQuery().data().equals("info") || //команды для собачьего меню
+        } else if (update.callbackQuery().data().equals("info") ||
                 update.callbackQuery().data().equals("way") ||
                 update.callbackQuery().data().equals("address") ||
                 update.callbackQuery().data().equals("safety") ||
@@ -49,9 +53,12 @@ public class DataCheck {
             dogButtonAnswers.sendResponseForFirstAndSecondMenuDogs(update);
         }
     }
-
+    /**
+     * processes responses from the cat shelter menu buttons
+     * @param update
+     */
     public void checkCatButtonAnswer(Update update) {
-        log.info("checkCatButtonAnswer - DataCheck");//команды для кошачьего меню
+        log.info("checkCatButtonAnswer - DataCheck");
         if (update.callbackQuery().data().equals(BUTTON_INFO.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_INSTRUCTION_CAT.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_RECORD.getMessage()) ||
@@ -77,16 +84,4 @@ public class DataCheck {
         }
     }
 
-    public void checkVolunteerButtonAnswer(Update update) {
-        log.info("checkVolunteerButtonAnswer - DataCheck");//команды для волонтера
-        if (update.callbackQuery().data().equals(BUTTON_ADD_USER.getMessage())||
-                update.callbackQuery().data().equals(BUTTON_VOLUNTEER_ADD_PET.getMessage()) ||
-                update.callbackQuery().data().equals(BUTTON_VOLUNTEER_CHECK_REPORTS.getMessage())||
-                update.callbackQuery().data().equals(BUTTON_BED_REPORT.getMessage()) ||
-                update.callbackQuery().data().equals(BUTTON_MAKE_DECISION_ON_PROBATION.getMessage())) {
-            volunteerButtonAnswers.checkButtonAnswerVolunteer(update);
-        }
-
-
-    }
 }

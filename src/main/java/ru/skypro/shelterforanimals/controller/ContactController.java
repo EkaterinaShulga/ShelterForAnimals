@@ -9,14 +9,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.shelterforanimals.entity.Contact;
-import ru.skypro.shelterforanimals.service.Impl.ContactServiceImpl;
-import ru.skypro.shelterforanimals.service.Impl.TelegramBotUpdatesListener;
+import ru.skypro.shelterforanimals.service.ContactService;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +25,7 @@ import java.util.Optional;
 @RequestMapping("/contact")
 public class ContactController {
 
-    private final ContactServiceImpl contactServiceImpl;
-    private final Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
+    private final ContactService contactService;
 
     @Operation(summary = "Поиск контакта по id",
             responses = {
@@ -42,7 +40,7 @@ public class ContactController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Contact>> getContact(@Parameter(description = "id контакта, для корректного поиска нужно указать верный id", required = true, example = "1")
                                                         @PathVariable int id){
-        Optional <Contact> contact = contactServiceImpl.findContactById(id);
+        Optional <Contact> contact = contactService.findContactById(id);
         if(contact .isEmpty() ){
             return ResponseEntity.notFound().build();
         }
@@ -59,9 +57,9 @@ public class ContactController {
                             ))}, tags = "Contact")
     @GetMapping
     public ResponseEntity<List<Contact>> findAllContacts(){
-        List<Contact> contacts = contactServiceImpl.getAllContacts();
+        List<Contact> contacts = contactService.getAllContacts();
         if(contacts == null ){
-            logger.warn("В базе данных нет контактов");
+            log.warn("В базе данных нет контактов");
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(contacts);
@@ -79,7 +77,7 @@ public class ContactController {
 
     @PostMapping("/newContact")
     public Contact addContact(@RequestBody Contact contact){
-        return contactServiceImpl.addContact(contact);
+        return contactService.addContact(contact);
     }
 }
 

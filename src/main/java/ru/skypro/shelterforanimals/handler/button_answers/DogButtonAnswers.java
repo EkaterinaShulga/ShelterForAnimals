@@ -10,7 +10,6 @@ import ru.skypro.shelterforanimals.constants.BotMessageEnum;
 import ru.skypro.shelterforanimals.service.TableService;
 
 
-import static ru.skypro.shelterforanimals.constants.BotButtonForShelterMenuEnum.COMMAND_SAFE_CONTACT_DETAILS_FOR_COMMUNICATION;
 import static ru.skypro.shelterforanimals.constants.BotMessageEnum.*;
 import static ru.skypro.shelterforanimals.constants.TextForResponseFromMenuButtonsDog.*;
 
@@ -23,34 +22,36 @@ public class DogButtonAnswers {
 
 
     /**
-     * метод возвращает пользователю один из подразделов главного меню (в зависимости <br>
-     * от того, какой раздел главного меню выбрал пользователь)
+     * the method processes the response from the start menu buttons of<br>
+     * the dog shelter and sends the response to the user
      *
      * @param update
      */
+
     public void checkButtonAnswerDogs(Update update) {
         String callBackData = update.callbackQuery().data();
         log.info(callBackData);
         long chatId = update.callbackQuery().message().chat().id();
         switch (callBackData) {
             case "Узнать информацию о приюте":
-                //вызов  меню этапа 1
                 String newMessage = USER_CHOOSE_SHELTER_INFO.getMessage();
-                //  EditMessageText messageText = new EditMessageText(chatId, messageId, newMessage);
                 telegramBot.execute(new SendMessage(chatId, newMessage)
                         .replyMarkup(tableService.menuButtonsWithInformationAboutShelterForDog()));
                 break;
             case "Как взять собаку из приюта":
-                //вызов  меню этапа 2
                 String message = USER_CHOOSE_DOG_INSTRUCTION.getMessage();
                 telegramBot.execute(new SendMessage(chatId, message)
                         .replyMarkup(tableService.menuButtonsWithInformationAboutGod()));
                 break;
             case "Прислать отчет о питомце":
-                //Отчет по питомцу
                 String creatRecordMessage = BotMessageEnum.DAILY_RECORD_INFO.getMessage();
                 telegramBot.execute(new SendMessage(chatId, creatRecordMessage));
                 log.info("Message Sent" + " Method - sendRecord");
+                break;
+            case "Прислать фото питомца":
+                String creatPetPhotoMessage = BotMessageEnum.PHOTO.getMessage();
+                telegramBot.execute(new SendMessage(chatId, creatPetPhotoMessage));
+                log.info("Message Sent" + " Method -  checkButtonAnswerDogs");
                 break;
             case "Позвать волонтера":
                 telegramBot.execute(new SendMessage(chatId, ASK_HELP.getMessage()));
@@ -58,14 +59,18 @@ public class DogButtonAnswers {
         }
     }
 
+    /**
+     * the method processes the response from the menu buttons<br>
+     * of the dog shelter (information about the shelter and how to take the animal)<br>
+     * and sends a response to the user<br>
+     *
+     * @param update
+     */
     public void sendResponseForFirstAndSecondMenuDogs(Update update) {
         log.info("вызвал метод sendAnswer");
         String answerMenu = update.callbackQuery().data();
         long chatId = update.callbackQuery().message().chat().id();
-        int messageId = update.callbackQuery().message().messageId();
         log.info("Ответ от кнопки " + answerMenu);
-        // List<Shelter> shelters = shelterRepository.findAll();
-        // List<InformationForOwner> info = informationForOwnerRepository.findAll();
         switch (answerMenu) {
             case "info":
                 SendMessage answer = new SendMessage(chatId, INFORMATION_ABOUT_SHELTER_DOG.getMessage());
@@ -73,39 +78,33 @@ public class DogButtonAnswers {
                 telegramBot.execute(answer);
                 break;
             case "workTime":
-//                        String workSchedule = shelter.getWorkScheduleShelter();
                 SendMessage answer2 = new SendMessage(chatId, WORK_TIME_SHELTER_DOG.getMessage());
                 log.warn("IMPORTANT work time shelter dog");
                 telegramBot.execute(answer2);
                 break;
             case "address":
-//                    String address = shelter.getAddressShelter();
                 SendMessage answer3 = new SendMessage(chatId, ADDRESS_SHELTER_DOG.getMessage());
                 log.warn("IMPORTANT  address shelter dog");
                 telegramBot.execute(answer3);
                 break;
             case "way":
-
-//                        String way = shelter.getDrivingDirectionsShelter();
-                SendMessage answer4 = new SendMessage(chatId,  WAY_SHELTER_DOG.getMessage());
+                SendMessage answer4 = new SendMessage(chatId, WAY_SHELTER_DOG.getMessage());
                 log.warn("IMPORTANT way shelter");
                 telegramBot.execute(answer4);
                 break;
             case "safety":
-//                        String safety = shelter.getSafetyAtShelter();
-                SendMessage answer5 = new SendMessage(chatId,SAFETY_DOG.getMessage());
+                SendMessage answer5 = new SendMessage(chatId, SAFETY_DOG.getMessage());
                 log.warn("IMPORTANT safety shelter");
                 telegramBot.execute(answer5);
                 break;
             case "volunteer":
-                telegramBot.execute(new SendMessage(chatId,  ASK_HELP.getMessage()));
+                telegramBot.execute(new SendMessage(chatId, ASK_HELP.getMessage()));
                 break;
             case "contact":
-                telegramBot.execute(new SendMessage(chatId, COMMAND_SAFE_CONTACT_DETAILS_FOR_COMMUNICATION.getText()));
+                telegramBot.execute(new SendMessage(chatId, COMMAND_SAFE_CONTACT_DETAILS_FOR_COMMUNICATION.getMessage()));
                 break;
             case "rules":
-//                        String information = infoOwner.getRules();
-                SendMessage answer6 = new SendMessage(chatId,  RULES_FOR_DATING_DOG.getMessage());
+                SendMessage answer6 = new SendMessage(chatId, RULES_FOR_DATING_DOG.getMessage());
                 log.warn("IMPORTANT rules");
                 telegramBot.execute(answer6);
                 break;
@@ -115,7 +114,6 @@ public class DogButtonAnswers {
                 telegramBot.execute(answer7);
                 break;
             case "transportation":
-//                        String information = infoOwner.getTranspartation();
                 SendMessage answer8 = new SendMessage(chatId, RECOMMENDATIONS_FOR_TRANSPORTATION_DOG.getMessage());
                 log.warn("IMPORTANT transportation dogs");
                 telegramBot.execute(answer8);
@@ -136,12 +134,12 @@ public class DogButtonAnswers {
                 telegramBot.execute(answer11);
                 break;
             case "cynologist":
-                SendMessage  answer12 = new SendMessage(chatId, RECOMMENDATIONS_OF_DOG_CYNOLOGISTS.getMessage());
+                SendMessage answer12 = new SendMessage(chatId, RECOMMENDATIONS_OF_DOG_CYNOLOGISTS.getMessage());
                 log.warn("IMPORTANT cynologist");
                 telegramBot.execute(answer12);
                 break;
             case "goodCynologists":
-                SendMessage answer13 = new SendMessage(chatId,  GOOD_CYNOLOGISTS.getMessage());
+                SendMessage answer13 = new SendMessage(chatId, GOOD_CYNOLOGISTS.getMessage());
                 log.warn("IMPORTANT good cynologists");
                 telegramBot.execute(answer13);
                 break;

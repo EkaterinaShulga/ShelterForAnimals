@@ -14,13 +14,22 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
 
-
+    /**
+     * saves the client in the database
+     *
+     * @param client - entity
+     */
     @Override
     public void saveClient(Client client) {
         log.info("метод saveClient - сохраняем пользователя - сlientServiceImpl");
         clientRepository.save(client);
     }
 
+    /**
+     * saves the client in the database
+     *
+     * @param chatId - chatId client
+     */
     @Override
     public Client findClient(Long chatId) {
         log.info("метод findClient - ищем пользователя - сlientServiceImpl");
@@ -28,12 +37,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClient(Client client) {
+    public void updateClient(Client client) {
         log.info("метод updateClient - изменяем данные пользователя - сlientServiceImpl");
         Client clientToUpdate = clientRepository.findByChatId(client.getChatId());
         clientToUpdate.setStatus(client.getStatus());
         clientToUpdate.setChatId(client.getChatId());
-        return clientRepository.save(clientToUpdate);
+        clientRepository.save(clientToUpdate);
     }
 
 
