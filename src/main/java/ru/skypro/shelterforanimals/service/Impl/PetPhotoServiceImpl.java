@@ -27,8 +27,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,48 +61,53 @@ public class PetPhotoServiceImpl implements PetPhotoService {
     public void uploadPhoto(Long recordId, PhotoSize[] photos) throws IOException {
         log.info("Was invoked method for upload avatar");
         Record record = recordService.findById(recordId);
-        LocalDateTime localDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-        System.out.println(record + " record");
-        if (record != null) {
-            String fileId = photos[0].fileId();
-            String fileName = photos[0].fileUniqueId();
-            System.out.println("fileId " + fileId);
-            System.out.println("fileName " + fileName);
+        LocalDate date = LocalDate.now();
+        if (record != null ) {
+            Long chatId = record.getChatId();
+            PetPhoto photoControl = petPhotoRepository.findPetPhotoByChatIdAndDate(chatId, date);
+            if (photoControl != null) {
+                telegramBot.execute(new SendMessage(chatId, "Вы за этот день уже сохраняли отчет"));
+            } else {
+                String fileId = photos[0].fileId();
+                String fileName = photos[0].fileUniqueId();
+                System.out.println("fileId " + fileId);
+                System.out.println("fileName " + fileName);
 
-            String botToken = value;
-            URL url = new URL("https://api.telegram.org/bot" + botToken + "/" + "getFile?file_id=" + fileId);
-            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-            String getFileResponse = br.readLine();
+                String botToken = value;
+                URL url = new URL("https://api.telegram.org/bot" + botToken + "/" + "getFile?file_id=" + fileId);
+                BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+                String getFileResponse = br.readLine();
 
-            JsonElement jResult = JsonParser.parseString(getFileResponse);
-            JsonObject path = jResult.getAsJsonObject().getAsJsonObject("result");
-            String file_path = path.get("file_path").getAsString();
-            System.out.println("file_path " + file_path);
+                JsonElement jResult = JsonParser.parseString(getFileResponse);
+                JsonObject path = jResult.getAsJsonObject().getAsJsonObject("result");
+                String file_path = path.get("file_path").getAsString();
+                System.out.println("file_path " + file_path);
 
-            Path filePath = Path.of(photoDis, record.getRecordId() + "." +
-                    getExtensions(Objects.requireNonNull(fileName)));
-            Files.createDirectories(filePath.getParent());
-            Files.deleteIfExists(filePath);
-            try (
-                    InputStream is = new URL("https://api.telegram.org/file/bot" + botToken + "/" + file_path).openConnection().getInputStream();
-                    OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-                    BufferedInputStream bis = new BufferedInputStream(is, 480);
-                    BufferedOutputStream bos = new BufferedOutputStream(os, 480);
-            ) {
-                bis.transferTo(bos);
+                Path filePath = Path.of(photoDis, record.getRecordId() + "." +
+                        getExtensions(Objects.requireNonNull(fileName)));
+                Files.createDirectories(filePath.getParent());
+                Files.deleteIfExists(filePath);
+                try (
+                        InputStream is = new URL("https://api.telegram.org/file/bot" + botToken + "/" + file_path).openConnection().getInputStream();
+                        OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
+                        BufferedInputStream bis = new BufferedInputStream(is, 480);
+                        BufferedOutputStream bos = new BufferedOutputStream(os, 480);
+                ) {
+                    bis.transferTo(bos);
+                }
+                PetPhoto petPhoto = new PetPhoto();
+                petPhoto.setRecord(record);
+                petPhoto.setFilePath(filePath.toString());
+                petPhoto.setFileSize(photos[0].fileSize());
+                petPhoto.setDate(date);
+                petPhoto.setChatId(record.getChatId());
+                petPhoto.setStatus(record.getStatus());
+                br.close();
+                petPhotoRepository.save(petPhoto);
+                log.info("Photo was saved");
+                telegramBot.execute(new SendMessage(petPhoto.getChatId(), "фото Вашего питомца сохранено"));
             }
-            PetPhoto petPhoto = new PetPhoto();
-            petPhoto.setRecord(record);
-            petPhoto.setFilePath(filePath.toString());
-            petPhoto.setFileSize(photos[0].fileSize());
-            petPhoto.setDateTime(localDate);
-            petPhoto.setChatId(record.getChatId());
-            petPhoto.setStatus(record.getStatus());
-            br.close();
-            petPhotoRepository.save(petPhoto);
-            log.info("Photo was saved");
-            telegramBot.execute(new SendMessage(petPhoto.getChatId(), "фото Вашего питомца сохранено"));
-        } else {
+        }else {
             log.info("Record not found");
 
         }
@@ -166,9 +169,7 @@ public class PetPhotoServiceImpl implements PetPhotoService {
             List<PetPhoto> photos = petPhotoRepository.getAllByChatId(chatIdUser);//выгружает все фото по данному  chatId и потом нужный ищет по дате
             if (photos != null) {//если фото есть
                 for (PetPhoto photo : photos) {
-                    LocalDateTime dateTimeRecord = photo.getDateTime();
-                    System.out.println(dateTimeRecord + " dateTimeRecord");
-                    LocalDate dateOfRecord = dateTimeRecord.toLocalDate();//ищем дату каждого фото
+                    LocalDate dateOfRecord = photo.getDate();//ищем дату каждого фото
                     if (!dateOfRecord.equals(dateNow)) {//если с текущей датой фото нет - бот отпавляет напоминание усыновителю
                         System.out.println(dateNow + " dateNow");
                         telegramBot.execute(new SendMessage(chatIdUser, PHOTO.getMessage() + dateNow));

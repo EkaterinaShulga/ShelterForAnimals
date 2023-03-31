@@ -71,7 +71,6 @@ public class RecordServiceImpl implements RecordService {
         Client client = clientRepository.findByChatId(chatId);
         int status = client.getStatus();
 
-
         int dietIndex = record.indexOf("Диета:");
         int adaptationIndex = record.indexOf("Адаптация:");
         int behaviorIndex = record.indexOf("Изменение в поведении:");
@@ -79,25 +78,30 @@ public class RecordServiceImpl implements RecordService {
         String dietResult = record.substring(dietIndex, adaptationIndex);
         String adaptationResult = record.substring(adaptationIndex, behaviorIndex);
         String behaviorResult = record.substring(behaviorIndex, record.length());
+        Record recordControl = recordRepository.findRecordByChatIdAndDate(chatId, date);
+        if(recordControl!= null){
+            telegramBot.execute(new SendMessage(chatId, "Сегодня вы уже отправляли отчет"));
+        }
+        else {
 
-
-        if (dietResult.length() < 8) {
-            telegramBot.execute(new SendMessage(chatId, RECORD_DIETA.getMessage()));
-        } else if (adaptationResult.length() < 8) {
-            telegramBot.execute(new SendMessage(chatId, RECORD_ADAPTATION.getMessage()));
-        } else if (behaviorResult.length() < 8) {
-            telegramBot.execute(new SendMessage(chatId, RECORD_BEHAVIOR.getMessage()));
-        } else {
-            Record recordForBase = new Record();
-            recordForBase.setDiet(dietResult);
-            recordForBase.setAdaptation(adaptationResult);
-            recordForBase.setChangeInBehavior(behaviorResult);
-            recordForBase.setChatId(chatId);
-            recordForBase.setDate(date);
-            recordForBase.setStatus(status);
-            recordRepository.save(recordForBase);
-            telegramBot.execute(new SendMessage(chatId, SAVE_INFORMATION.getMessage()));
-            log.info("текстовый отчет занесен в базу данных");
+            if (dietResult.length() < 8) {
+                telegramBot.execute(new SendMessage(chatId, RECORD_DIETA.getMessage()));
+            } else if (adaptationResult.length() < 8) {
+                telegramBot.execute(new SendMessage(chatId, RECORD_ADAPTATION.getMessage()));
+            } else if (behaviorResult.length() < 8) {
+                telegramBot.execute(new SendMessage(chatId, RECORD_BEHAVIOR.getMessage()));
+            } else {
+                Record recordForBase = new Record();
+                recordForBase.setDiet(dietResult);
+                recordForBase.setAdaptation(adaptationResult);
+                recordForBase.setChangeInBehavior(behaviorResult);
+                recordForBase.setChatId(chatId);
+                recordForBase.setDate(date);
+                recordForBase.setStatus(status);
+                recordRepository.save(recordForBase);
+                telegramBot.execute(new SendMessage(chatId, SAVE_INFORMATION.getMessage()));
+                log.info("текстовый отчет занесен в базу данных");
+            }
         }
     }
 
