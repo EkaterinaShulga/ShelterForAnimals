@@ -24,62 +24,65 @@ public class DataCheck {
 
     /**
      * processes responses from the dog shelter menu buttons
+     *
      * @param update
      */
     public void checkDogButtonAnswer(Update update) {
         log.info("checkDogButtonAnswer - DataCheck");
-        if (update.callbackQuery().data().equals(BUTTON_INFO.getMessage()) ||
+        if (update.callbackQuery().data().equals(COMMAND_INFORMATION_ABOUT_SHELTER_DOG.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_INSTRUCTION_DOG.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_RECORD.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_PET_PHOTO.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_HELP.getMessage())) {
             dogButtonAnswers.checkButtonAnswerDogs(update);
-        } else if (update.callbackQuery().data().equals("info") ||
-                update.callbackQuery().data().equals("way") ||
-                update.callbackQuery().data().equals("address") ||
-                update.callbackQuery().data().equals("safety") ||
-                update.callbackQuery().data().equals("volunteer") ||
-                update.callbackQuery().data().equals("workTime") ||
-                update.callbackQuery().data().equals("contact") ||
-                update.callbackQuery().data().equals("rules") ||
-                update.callbackQuery().data().equals("docs") ||
-                update.callbackQuery().data().equals("transportation") ||
-                update.callbackQuery().data().equals("arrangementPuppy") ||
-                update.callbackQuery().data().equals("arrangementDog") ||
-                update.callbackQuery().data().equals("arrangementDogInvalid") ||
-                update.callbackQuery().data().equals("cynologist") ||
-                update.callbackQuery().data().equals("goodCynologists") ||
-                update.callbackQuery().data().equals("reject")) {
+        } else if (update.callbackQuery().data().equals(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_DRIVING_DIRECTIONS.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_ADDRESS_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_SAFETY_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_CALL_VOLUNTEER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_WORK_SCHEDULE_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_MEET_PET.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_DOC.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_TRANSPORTATION.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_PUPPY.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_ARRANGEMENT_DOG.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_ARRANGEMENT_INVALID.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_CYNOLOGIST.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_GOOD_CYNOLOGIST.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_REJECT.getMessage())) {
             dogButtonAnswers.sendResponseForFirstAndSecondMenuDogs(update);
         }
     }
+
     /**
      * processes responses from the cat shelter menu buttons
+     *
      * @param update
      */
     public void checkCatButtonAnswer(Update update) {
         log.info("checkCatButtonAnswer - DataCheck");
-        if (update.callbackQuery().data().equals(BUTTON_INFO.getMessage()) ||
+        if (update.callbackQuery().data().equals(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_INSTRUCTION_CAT.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_RECORD.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_PET_PHOTO.getMessage()) ||
                 update.callbackQuery().data().equals(BUTTON_HELP.getMessage())) {
             catButtonAnswers.checkButtonAnswerCats(update);
-        } else if (update.callbackQuery().data().equals("infoCat") ||
-                update.callbackQuery().data().equals("wayCat") ||
-                update.callbackQuery().data().equals("addressCat") ||
-                update.callbackQuery().data().equals("securityContactCat") ||
-                update.callbackQuery().data().equals("safetyCat") ||
-                update.callbackQuery().data().equals("volunteerCat") ||
-                update.callbackQuery().data().equals("workTimeCat") ||
-                update.callbackQuery().data().equals("contactCat") ||
-                update.callbackQuery().data().equals("rulesCat") ||
-                update.callbackQuery().data().equals("docsCat") ||
-                update.callbackQuery().data().equals("transportationCat") ||
-                update.callbackQuery().data().equals("arrangementKitty") ||
-                update.callbackQuery().data().equals("arrangementCat") ||
-                update.callbackQuery().data().equals("arrangementCatDisabled") ||
-                update.callbackQuery().data().equals("rejectCat")) {
+        } else if (update.callbackQuery().data().equals(COMMAND_INFORMATION_ABOUT_SHELTER_CAT.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_DRIVING_DIRECTIONS.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_ADDRESS_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_SECURITY_CONTACT_CAT.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_SAFETY_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_CALL_VOLUNTEER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_WORK_SCHEDULE_SHELTER.getMessage()) ||
+                update.callbackQuery().data().equals(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_MEET_PET.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_DOC.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_TRANSPORTATION.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_KITTY.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_ARRANGEMENT_CAT.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_ARRANGEMENT_INVALID.getMessage()) ||
+                update.callbackQuery().data().equals(BUTTON_REJECT.getMessage())) {
             catButtonAnswers.sendResponseForFirstAndSecondMenuCats(update);
         }
     }

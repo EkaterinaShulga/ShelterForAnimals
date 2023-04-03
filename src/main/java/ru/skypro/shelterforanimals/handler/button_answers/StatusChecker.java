@@ -30,7 +30,7 @@ public class StatusChecker {
      * of the bot's start menu - you need to choose<br>
      * your login status: user or volunteer<br>
      *
-     * @param update
+     * @param update- update from the bot
      */
     private void checkButtonAnswerForStatus(Update update) {
         log.info("Проверка ответа Пользователь/Волонтер - checkButtonAnswerForStatus - StatusChecker");
@@ -58,7 +58,7 @@ public class StatusChecker {
      * At the same time, the Client entity is created - depending on the status and shelter,<br>
      * a numeric identifier (from 1 to 4) is assigned to the Client<br>
      *
-     * @param update
+     * @param update- update from the bot
      */
     public void checkButtonShelterStatus(Update update) {
         log.info("Проверка выбора приюта и создание клиента -  checkButtonShelterStatus - StatusChecker");
@@ -116,7 +116,7 @@ public class StatusChecker {
      * At the same time, the volunteer entity is created with the indication <br>
      * of the volunteer status (cat Volunteer = 2, dog Volunteer = 1) <br>
      *
-     * @param update
+     * @param update- update from the bot
      */
 
     private void checkButtonVolunteerStatus(Update update) {

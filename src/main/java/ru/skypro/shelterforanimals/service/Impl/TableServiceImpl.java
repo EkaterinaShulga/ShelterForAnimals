@@ -23,13 +23,13 @@ public class TableServiceImpl implements TableService {
     @Override
     public InlineKeyboardMarkup startMenuButtonsForShelterDog() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        var button1Info = new InlineKeyboardButton(BUTTON_INFO.getMessage());
+        var button1Info = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER_DOG.getMessage());
         var button2Instruction = new InlineKeyboardButton(BUTTON_INSTRUCTION_DOG.getMessage());
         var button3Record = new InlineKeyboardButton(BUTTON_RECORD.getMessage());
         var button4Photo = new InlineKeyboardButton(BUTTON_PET_PHOTO.getMessage());
         var button5Help = new InlineKeyboardButton(BUTTON_HELP.getMessage());
 
-        button1Info.callbackData(BUTTON_INFO.getMessage());
+        button1Info.callbackData(COMMAND_INFORMATION_ABOUT_SHELTER_DOG.getMessage());
         button2Instruction.callbackData(BUTTON_INSTRUCTION_DOG.getMessage());
         button2Instruction.callbackData(BUTTON_INSTRUCTION_DOG.getMessage());
         button3Record.callbackData(BUTTON_RECORD.getMessage());
@@ -54,13 +54,13 @@ public class TableServiceImpl implements TableService {
     @Override
     public InlineKeyboardMarkup startMenuButtonsForShelterCat() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        var button1Info = new InlineKeyboardButton(BUTTON_INFO.getMessage());
+        var button1Info = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage());
         var button2Instruction = new InlineKeyboardButton(BUTTON_INSTRUCTION_CAT.getMessage());
         var button3Record = new InlineKeyboardButton(BUTTON_RECORD.getMessage());
         var button4PetPhoto = new InlineKeyboardButton(BUTTON_PET_PHOTO.getMessage());
         var button5Help = new InlineKeyboardButton(BUTTON_HELP.getMessage());
 
-        button1Info.callbackData(BUTTON_INFO.getMessage());
+        button1Info.callbackData(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage());
         button2Instruction.callbackData(BUTTON_INSTRUCTION_CAT.getMessage());
         button3Record.callbackData(BUTTON_RECORD.getMessage());
         button4PetPhoto.callbackData(BUTTON_PET_PHOTO.getMessage());
@@ -91,13 +91,13 @@ public class TableServiceImpl implements TableService {
         var buttonContact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
         var buttonVolunteer = new InlineKeyboardButton(COMMAND_CALL_VOLUNTEER.getMessage());
 
-        buttonAboutShelter.callbackData("info");
-        buttonWorkTime.callbackData("workTime");
-        buttonAddress.callbackData("address");
-        buttonWay.callbackData("way");
-        buttonSafety.callbackData("safety");
-        buttonContact.callbackData("contact");
-        buttonVolunteer.callbackData("volunteer");
+        buttonAboutShelter.callbackData(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage());
+        buttonWorkTime.callbackData(COMMAND_WORK_SCHEDULE_SHELTER.getMessage());
+        buttonAddress.callbackData(COMMAND_ADDRESS_SHELTER.getMessage());
+        buttonWay.callbackData(COMMAND_DRIVING_DIRECTIONS.getMessage());
+        buttonSafety.callbackData(COMMAND_SAFETY_SHELTER.getMessage());
+        buttonContact.callbackData(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
+        buttonVolunteer.callbackData(COMMAND_CALL_VOLUNTEER.getMessage());
 
         markup.addRow(buttonAboutShelter);
         markup.addRow(buttonWorkTime);
@@ -118,7 +118,7 @@ public class TableServiceImpl implements TableService {
     @Override
     public InlineKeyboardMarkup menuButtonsWithInformationAboutShelterForCat() {
         InlineKeyboardMarkup markupCat = new InlineKeyboardMarkup();
-        var buttonAboutShelter = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER.getMessage());
+        var buttonAboutShelter = new InlineKeyboardButton(COMMAND_INFORMATION_ABOUT_SHELTER_CAT.getMessage());
         var buttonWorkTime = new InlineKeyboardButton(COMMAND_WORK_SCHEDULE_SHELTER.getMessage());
         var buttonAddress = new InlineKeyboardButton(COMMAND_ADDRESS_SHELTER.getMessage());
         var buttonWay = new InlineKeyboardButton(COMMAND_DRIVING_DIRECTIONS.getMessage());
@@ -127,14 +127,14 @@ public class TableServiceImpl implements TableService {
         var buttonContact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
         var buttonVolunteer = new InlineKeyboardButton(COMMAND_CALL_VOLUNTEER.getMessage());
 
-        buttonAboutShelter.callbackData("infoCat");
-        buttonWorkTime.callbackData("workTimeCat");
-        buttonAddress.callbackData("addressCat");
-        buttonWay.callbackData("wayCat");
-        buttonSecurityContact.callbackData("securityContactCat");
-        buttonSafety.callbackData("safetyCat");
-        buttonContact.callbackData("contactCat");
-        buttonVolunteer.callbackData("volunteerCat");
+        buttonAboutShelter.callbackData(COMMAND_INFORMATION_ABOUT_SHELTER_CAT.getMessage());
+        buttonWorkTime.callbackData(COMMAND_WORK_SCHEDULE_SHELTER.getMessage());
+        buttonAddress.callbackData(COMMAND_ADDRESS_SHELTER.getMessage());
+        buttonWay.callbackData(COMMAND_DRIVING_DIRECTIONS.getMessage());
+        buttonSecurityContact.callbackData(COMMAND_SECURITY_CONTACT_CAT.getMessage());
+        buttonSafety.callbackData(COMMAND_SAFETY_SHELTER.getMessage());
+        buttonContact.callbackData(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
+        buttonVolunteer.callbackData(COMMAND_CALL_VOLUNTEER.getMessage());
 
         markupCat.addRow(buttonAboutShelter);
         markupCat.addRow(buttonWorkTime);
@@ -156,7 +156,7 @@ public class TableServiceImpl implements TableService {
     public InlineKeyboardMarkup menuButtonsWithInformationAboutGod() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
 
-        var button1Rules = new InlineKeyboardButton(BUTTON_KNOW.getMessage());
+        var button1Rules = new InlineKeyboardButton(BUTTON_MEET_PET.getMessage());
         var button2Docs = new InlineKeyboardButton(BUTTON_DOC.getMessage());
         var button3Transportation = new InlineKeyboardButton(BUTTON_TRANSPORTATION.getMessage());
         var button4ArrangementPuppy = new InlineKeyboardButton(BUTTON_PUPPY.getMessage());
@@ -165,20 +165,20 @@ public class TableServiceImpl implements TableService {
         var button7Cynologist = new InlineKeyboardButton(BUTTON_CYNOLOGIST.getMessage());
         var button8GoodCynologist = new InlineKeyboardButton(BUTTON_GOOD_CYNOLOGIST.getMessage());
         var button9Reject = new InlineKeyboardButton(BUTTON_REJECT.getMessage());
-        var button10Contact = new InlineKeyboardButton(BUTTON_CONTACT.getMessage());
+        var button10Contact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
         var button11Volunteer = new InlineKeyboardButton(BUTTON_HELP.getMessage());
 
-        button1Rules.callbackData("rules");
-        button2Docs.callbackData("docs");
-        button3Transportation.callbackData("transportation");
-        button4ArrangementPuppy.callbackData("arrangementPuppy");
-        button5ArrangementDog.callbackData("arrangementDog");
-        button6ArrangementDogInvalid.callbackData("arrangementDogInvalid");
-        button7Cynologist.callbackData("cynologist");
-        button8GoodCynologist.callbackData("goodCynologists");
-        button9Reject.callbackData("reject");
-        button10Contact.callbackData("contact");
-        button11Volunteer.callbackData("volunteer");
+        button1Rules.callbackData(BUTTON_MEET_PET.getMessage());
+        button2Docs.callbackData(BUTTON_DOC.getMessage());
+        button3Transportation.callbackData(BUTTON_TRANSPORTATION.getMessage());
+        button4ArrangementPuppy.callbackData(BUTTON_PUPPY.getMessage());
+        button5ArrangementDog.callbackData(BUTTON_ARRANGEMENT_DOG.getMessage());
+        button6ArrangementDogInvalid.callbackData(BUTTON_ARRANGEMENT_INVALID.getMessage());
+        button7Cynologist.callbackData(BUTTON_CYNOLOGIST.getMessage());
+        button8GoodCynologist.callbackData(BUTTON_GOOD_CYNOLOGIST.getMessage());
+        button9Reject.callbackData(BUTTON_REJECT.getMessage());
+        button10Contact.callbackData(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
+        button11Volunteer.callbackData(BUTTON_HELP.getMessage());
 
         markup.addRow(button1Rules);
         markup.addRow(button2Docs);
@@ -205,25 +205,25 @@ public class TableServiceImpl implements TableService {
     public InlineKeyboardMarkup menuButtonsWithInformationAboutCat() {
         InlineKeyboardMarkup markupCat = new InlineKeyboardMarkup();
 
-        var button1Rules = new InlineKeyboardButton(BUTTON_KNOW.getMessage());
+        var button1Rules = new InlineKeyboardButton(BUTTON_MEET_PET.getMessage());
         var button2Docs = new InlineKeyboardButton(BUTTON_DOC.getMessage());
         var button3Transportation = new InlineKeyboardButton(BUTTON_TRANSPORTATION.getMessage());
         var button4ArrangementKitty = new InlineKeyboardButton(BUTTON_KITTY.getMessage());
         var button5ArrangementCat = new InlineKeyboardButton(BUTTON_ARRANGEMENT_CAT.getMessage());
         var button6ArrangementCatInvalid = new InlineKeyboardButton(BUTTON_ARRANGEMENT_INVALID.getMessage());
         var button7Reject = new InlineKeyboardButton(BUTTON_REJECT.getMessage());
-        var button8Contact = new InlineKeyboardButton(BUTTON_CONTACT.getMessage());
+        var button8Contact = new InlineKeyboardButton(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
         var button9Volunteer = new InlineKeyboardButton(BUTTON_HELP.getMessage());
 
-        button1Rules.callbackData("rulesCat");
-        button2Docs.callbackData("docsCat");
-        button3Transportation.callbackData("transportationCat");
-        button4ArrangementKitty.callbackData("arrangementKitty");
-        button5ArrangementCat.callbackData("arrangementCat");
-        button6ArrangementCatInvalid.callbackData("arrangementCatDisabled");
-        button7Reject.callbackData("rejectCat");
-        button8Contact.callbackData("contactCat");
-        button9Volunteer.callbackData("volunteerCat");
+        button1Rules.callbackData(BUTTON_MEET_PET.getMessage());
+        button2Docs.callbackData(BUTTON_DOC.getMessage());
+        button3Transportation.callbackData(BUTTON_TRANSPORTATION.getMessage());
+        button4ArrangementKitty.callbackData(BUTTON_KITTY.getMessage());
+        button5ArrangementCat.callbackData(BUTTON_ARRANGEMENT_CAT.getMessage());
+        button6ArrangementCatInvalid.callbackData(BUTTON_ARRANGEMENT_INVALID.getMessage());
+        button7Reject.callbackData(BUTTON_REJECT.getMessage());
+        button8Contact.callbackData(COMMAND_LEAVE_DATA_FOR_COMMUNICATION.getMessage());
+        button9Volunteer.callbackData(BUTTON_HELP.getMessage());
 
         markupCat.addRow(button1Rules);
         markupCat.addRow(button2Docs);
@@ -288,13 +288,13 @@ public class TableServiceImpl implements TableService {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         var buttonCheckContacts = new InlineKeyboardButton(BUTTON_CHECK_CONTACT.getMessage());
         var buttonAddUser = new InlineKeyboardButton(BUTTON_ADD_USER.getMessage());
-        var buttonCheckReports = new InlineKeyboardButton(BUTTON_CHECK_REPORTS.getMessage());
+        var buttonCheckReports = new InlineKeyboardButton(BUTTON_VOLUNTEER_CHECK_REPORTS.getMessage());
         var buttonMakeDecisionOnProbation = new InlineKeyboardButton(BUTTON_MESSAGE_FOR_USER.getMessage());
         var buttonAddPet = new InlineKeyboardButton(BUTTON_VOLUNTEER_ADD_PET.getMessage());
 
         buttonCheckContacts.callbackData(BUTTON_CHECK_CONTACT.getMessage());
         buttonAddUser.callbackData(BUTTON_ADD_USER.getMessage());
-        buttonCheckReports.callbackData(BUTTON_CHECK_REPORTS.getMessage());
+        buttonCheckReports.callbackData(BUTTON_VOLUNTEER_CHECK_REPORTS.getMessage());
         buttonMakeDecisionOnProbation.callbackData(BUTTON_MESSAGE_FOR_USER.getMessage());
         buttonAddPet.callbackData(BUTTON_VOLUNTEER_ADD_PET.getMessage());
 
