@@ -16,7 +16,6 @@ import ru.skypro.shelterforanimals.service.VolunteerService;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.skypro.shelterforanimals.constants.BotMessageEnum.*;

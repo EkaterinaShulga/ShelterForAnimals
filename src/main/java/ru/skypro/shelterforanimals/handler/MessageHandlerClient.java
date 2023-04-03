@@ -162,12 +162,10 @@ public class MessageHandlerClient {
     private void sendResponseForThirdMenu(Update update) {
         log.info(" вызван метод sendResponseForThirdMenu - MessageHandlerClient");
         String answerMenu = update.callbackQuery().data();
-        LocalDate date = LocalDate.now();
         long chatId = update.callbackQuery().message().chat().id();
-        int messageId = update.callbackQuery().message().messageId();
         switch (answerMenu) {
             case "photo":
-                telegramBot.execute(new EditMessageText(chatId, messageId, PHOTO.getMessage()));
+                telegramBot.execute(new SendMessage(chatId, PHOTO.getMessage()));
                 log.warn("IMPORTANT" + PHOTO.getMessage());
                 break;
             case "record":

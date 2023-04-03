@@ -19,12 +19,21 @@ public class VolunteerButtonAnswers {
     private final TableService tableService;
 
 
+    private final static String ADD_USER = "Добавить усыновителя";
+    private final static String MESSAGE_FOR_USER = "Сообщение усыновителю";
+    private final static String VOLUNTEER_ADD_PET = "Добавить питомца";
+    private final static String PASSED_PROBATION_PERIOD = "ИС пройден";
+    private final static String DID_NOT_PASSED_PROBATION_PERIOD ="ИС не пройден";
+    private final static String EXTRA_TIME = "Доп время";
+    private final static String BED_RECORD = "Плохой отчет";
+
+
     /**
      * the method processes the response from the menu buttons<br>
      * of the volunteer (its functionality) <br>
      * and sends a response to the user/volunteer<br>
      *
-     * @param update
+     * @param update- update from the bot
      */
 
     public void checkButtonAnswerVolunteer(Update update) {
@@ -32,35 +41,35 @@ public class VolunteerButtonAnswers {
         long chatId = update.callbackQuery().message().chat().id();
         log.info("Ответ от кнопки " + callBackData);
         switch (callBackData) {
-            case " Добавить усыновителя ":
+            case ADD_USER:
                 SendMessage message = new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_USER.getMessage());
                 log.warn("send information for volunteer - how create new user");
                 telegramBot.execute(message);
                 break;
-            case " Добавить питомца ":
+            case VOLUNTEER_ADD_PET:
                 SendMessage message1 = new SendMessage(chatId, ANSWER_FOR_BUTTON_SAVE_PET.getMessage());
                 log.warn("send information for volunteer - how create new pet");
                 telegramBot.execute(message1);
                 break;
-            case " Сообщение усыновителю ":
+            case MESSAGE_FOR_USER:
                 String message3 = ANSWER_FOR_BUTTON_PROBATION_PERIOD.getMessage();
-               telegramBot.execute(new SendMessage(chatId, message3)
-                               .replyMarkup(tableService.makeButtonsMessagesToUserAboutProbationPeriod()));
+                telegramBot.execute(new SendMessage(chatId, message3)
+                        .replyMarkup(tableService.makeButtonsMessagesToUserAboutProbationPeriod()));
                 log.info("send information for volunteer - probation period");
                 break;
-            case "ИС пройден":
-               telegramBot.execute(new SendMessage(chatId,
-                       ANSWER_FOR_BUTTON_PROBATION_PERIOD_SEND_CHAT_ID.getMessage()));
+            case PASSED_PROBATION_PERIOD:
+                telegramBot.execute(new SendMessage(chatId,
+                        ANSWER_FOR_BUTTON_PROBATION_PERIOD_SEND_CHAT_ID.getMessage()));
                 break;
-            case "ИС не пройден":
+            case DID_NOT_PASSED_PROBATION_PERIOD:
                 telegramBot.execute(new SendMessage(chatId,
                         ANSWER_FOR_BUTTON_PROBATION_PERIOD_NOT_IS_OVER_SEND_CHAT_ID.getMessage()));
                 break;
-            case "Доп время":
+            case EXTRA_TIME:
                 telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_EXTRA_TIME.getMessage()));
                 break;
 
-            case"Плохой отчет":
+            case BED_RECORD:
                 telegramBot.execute(new SendMessage(chatId, ANSWER_FOR_BUTTON_BAD_REPORT.getMessage()));
                 break;
         }
