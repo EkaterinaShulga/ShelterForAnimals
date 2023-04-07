@@ -5,6 +5,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.skypro.shelterforanimals.entity.Record;
 import ru.skypro.shelterforanimals.entity.User;
@@ -183,9 +184,9 @@ public class VolunteerServiceImpl implements VolunteerService {
      * about this to the volunteer
      */
 
-    //   @Scheduled(cron = "0 0/1 * * * *") //проверка отчетов происходит один раз в сутки
-    public void checkRecordAndSendReminderForVolunteer() {
-        log.info("checkRecordAndSendReminderForVolunteer");
+       @Scheduled(cron = "0 0/3 * * * *") //проверка отчетов происходит один раз в сутки
+    public void sendReminderForVolunteer() {
+        log.info("VolunteerServiceImpl - sendReminderForVolunteer()");
         List<Volunteer> allVolunteers = volunteerRepository.findAll();//все волонтеры
         List<User> allUsers = userRepository.findAll();//все усыновители
         LocalDate dateNow = LocalDate.now();//дата проверки отчета
@@ -203,7 +204,11 @@ public class VolunteerServiceImpl implements VolunteerService {
                     for (Volunteer volunteer : allVolunteers) {
                         long chatIdVolunteer = volunteer.getChatId();
                         int statusVolunteer = volunteer.getStatus();
-                        if (statusVolunteer == statusUser && !dateOfRecord.equals(dateNow)) {//если с текущей датой  и следующей за ней отчета нет - бот отпавляет напоминание волонтеру
+                        if(records.isEmpty()){
+                            telegramBot.execute(new SendMessage(chatIdVolunteer, "По данному chatId" +  chatIdUser + " в базе нет ни одного отчета"));
+                            log.info("Волонтеру направлено уведомление о том, что усыновитель не присылал ни одного отчета");
+                        }
+                        else if (statusVolunteer == statusUser && !dateOfRecord.equals(dateNow)) {//если с текущей датой  и следующей за ней отчета нет - бот отпавляет напоминание волонтеру
                             Record record1 = recordRepository.findRecordByChatIdAndDate(chatIdUser, dateTimeOneDayBefore);
                             if (record1 == null) {
                                 telegramBot.execute(new SendMessage(chatIdVolunteer, REPORT_REMEMBER_FOR_VOLUNTEER.getMessage() + dateNow + " и " + dateNextRecord + " , " + chatIdUser));
@@ -213,8 +218,6 @@ public class VolunteerServiceImpl implements VolunteerService {
                     }
 
                 }
-
-
             }
         }
     }

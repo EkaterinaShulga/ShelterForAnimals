@@ -22,6 +22,7 @@ CREATE TABLE Clients
 CREATE TABLE Contacts
 (
     id            serial PRIMARY KEY,
+    chat_id       BIGSERIAL,
     name          TEXT,
     number_phone  TEXT,
     date          DATE,

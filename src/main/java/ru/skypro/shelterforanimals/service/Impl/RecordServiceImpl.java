@@ -5,6 +5,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.skypro.shelterforanimals.entity.Client;
 import ru.skypro.shelterforanimals.entity.Record;
@@ -70,6 +71,8 @@ public class RecordServiceImpl implements RecordService {
         long chatId = update.message().chat().id();
         Client client = clientRepository.findByChatId(chatId);
         int status = client.getStatus();
+        User user = userRepository.findByChatId(chatId);
+        int statusUser = user.getStatus();
 
         int dietIndex = record.indexOf("Диета:");
         int adaptationIndex = record.indexOf("Адаптация:");
@@ -83,14 +86,9 @@ public class RecordServiceImpl implements RecordService {
             telegramBot.execute(new SendMessage(chatId, "Сегодня вы уже отправляли отчет"));
         }
         else {
-
-            if (dietResult.length() < 8) {
-                telegramBot.execute(new SendMessage(chatId, RECORD_DIETA.getMessage()));
-            } else if (adaptationResult.length() < 8) {
-                telegramBot.execute(new SendMessage(chatId, RECORD_ADAPTATION.getMessage()));
-            } else if (behaviorResult.length() < 8) {
-                telegramBot.execute(new SendMessage(chatId, RECORD_BEHAVIOR.getMessage()));
-            } else {
+            if (status == statusUser) {
+                System.out.println(statusUser + " statusUser");
+                System.out.println(status + " status");
                 Record recordForBase = new Record();
                 recordForBase.setDiet(dietResult);
                 recordForBase.setAdaptation(adaptationResult);
@@ -102,8 +100,13 @@ public class RecordServiceImpl implements RecordService {
                 telegramBot.execute(new SendMessage(chatId, SAVE_INFORMATION.getMessage()));
                 log.info("текстовый отчет занесен в базу данных");
             }
+            else{
+                telegramBot.execute(new SendMessage(chatId, "Not for this shelter"));
+                log.info("отчет можно сохранить только в том приюте, в котором есть этот усыновитель");
+            }
         }
-    }
+        }
+
 
     /**
      * method finds records on database from the status volunteer
@@ -146,9 +149,10 @@ public class RecordServiceImpl implements RecordService {
      */
 
 
-    //   @Scheduled(cron = "0 0/1 * * * *") //проверка отчетов происходит один раз в сутки
-    public void checkRecordAndSendReminder() {
-        List<Volunteer> allVolunteers = volunteerRepository.findAll();//все волонтеры
+      @Scheduled(cron = "0 0/1 * * * *") //проверка отчетов происходит один раз в сутки
+    public void checkRecordAndSendReminderForUser() {
+           log.info("RecordServiceImpl - checkRecordAndSendReminderForUser()");
+           List<Volunteer> allVolunteers = volunteerRepository.findAll();//все волонтеры
         List<User> allUsers = userRepository.findAll();//все усыновители
         LocalDate dateNow = LocalDate.now();//дата проверки отчета
         for (User user : allUsers) {
@@ -158,19 +162,19 @@ public class RecordServiceImpl implements RecordService {
             if (records != null) {//если отчеты есть
                 for (Record record : records) {
                     LocalDate dateOfRecord = record.getDate();//ищем дату каждого отчета
-                    //    System.out.println(dateOfRecord + " dateOfRecord");
                     if (!dateOfRecord.equals(dateNow)) {//если с текущей датой отчета нет - бот отпавляет напоминание усыновителю
                         telegramBot.execute(new SendMessage(chatIdUser, REPORT_REMEMBER_ABOUT_RECORD.getMessage() + dateNow));
                         log.info("Пользователю направлено напоминание о необходимости прислать текстовый отчет за конкретный день");
+                    for (Volunteer volunteer : allVolunteers) {
+                        if (volunteer.getStatus() == status) {
+                            telegramBot.execute(new SendMessage(volunteer.getChatId(),
+                                    "отправил усыновителю напоминание о том, что нужно прилать отчет за  " + dateNow));
+                        }
+                    }
                     }
                 }
-                for (Volunteer volunteer : allVolunteers) {
-                    if (volunteer.getStatus() == status) {
-                        telegramBot.execute(new SendMessage(volunteer.getChatId(),
-                                "отправил усыновителю напоминание о том, что нужно прилать отчет за  " + dateNow));
-                    }
-                }
-            } else {
+            }
+            else {
                 telegramBot.execute(new SendMessage(user.getChatId(),
                         "по данному " + chatIdUser + " в базе нет отчетов"));
                 System.out.println("по данному " + chatIdUser + " в базе нет отчетов");
@@ -178,5 +182,7 @@ public class RecordServiceImpl implements RecordService {
 
         }
     }
+
+
 }
 

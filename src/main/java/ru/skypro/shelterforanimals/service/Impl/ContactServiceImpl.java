@@ -59,11 +59,13 @@ public class ContactServiceImpl implements ContactService {
             contact.setName(name);
             contact.setDate(localDate);
             contact.setClientStatus(client.getStatus());
-            List<Contact> contacts = contactRepository.findContactByNumberPhoneAndName(phone, name);
-            log.info(String.valueOf(contacts));
+            contact.setChatId(chatId);
+            Contact contact1 = contactRepository.findContactByChatId(chatId);
+            // List<Contact> contacts = contactRepository.findContactByNumberPhoneAndName(phone, name);
+            log.info(String.valueOf(contact1));
 
             try {
-                if (contacts.isEmpty()) {
+                if (contact1 == null) {
                     if (client.getStatus() == 1) {
                         contact.setClientStatus(client.getStatus());
                         contactRepository.save(contact);
@@ -81,10 +83,10 @@ public class ContactServiceImpl implements ContactService {
             } catch (NullPointerException e) {
                 log.info("пользователь предоставил новый контакт");
             }
-        } else if (!matcher.matches()) {
+        } /*else if (!matcher.matches()) {
             telegramBot.execute(new SendMessage(chatId, BOT_ANSWER_NOT_SAVED_CONTACT.getMessage()));
             log.warn("Не смогу сохранить запись. Введенное сообщение не соотствует шаблону");
-        }
+        }*/
     }
 
     /**

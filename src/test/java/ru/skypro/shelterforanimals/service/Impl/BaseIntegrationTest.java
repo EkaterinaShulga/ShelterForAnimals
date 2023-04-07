@@ -39,7 +39,7 @@ public class BaseIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
-    private Contact contact = new Contact(1, "Иванов Иван Иванович", "89061875572", LocalDate.now(), 2);
+    private Contact contact = new Contact(1,1300060749,"Иванов Иван Иванович", "89061875572", LocalDate.now(), 2);
 
     @AfterEach
     public void cleanup() {
