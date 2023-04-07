@@ -25,6 +25,12 @@ public class Client {
     public Client() {
     }
 
+    public Client(long id, long chatId, int status){
+        this.id = id;
+        this.chatId = chatId;
+        this.status = status;
+    }
+
 
     @Override
     public boolean equals(Object o) {

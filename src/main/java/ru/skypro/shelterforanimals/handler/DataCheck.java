@@ -20,7 +20,6 @@ import static ru.skypro.shelterforanimals.constants.BotButtonEnum.BUTTON_INSTRUC
 public class DataCheck {
     private final DogButtonAnswers dogButtonAnswers;
     private final CatButtonAnswers catButtonAnswers;
-    private final VolunteerButtonAnswers volunteerButtonAnswers;
 
     /**
      * processes responses from the dog shelter menu buttons

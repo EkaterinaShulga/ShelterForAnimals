@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -25,15 +26,20 @@ public class Contact {
     private String name;
     private String numberPhone;
 
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     private int clientStatus;
 
-    @OneToOne()
-    @JoinColumn(name = "id_client")
-    private Client client;
-
     public Contact() {
+    }
+
+    public Contact(int id, String name, String numberPhone, LocalDate date, int clientStatus){
+        this.id = id;
+        this.name = name;
+        this.numberPhone = numberPhone;
+        this.date = date;
+        this.clientStatus = clientStatus;
+
     }
 
     @Override
@@ -41,12 +47,12 @@ public class Contact {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return id == contact.id && clientStatus == contact.clientStatus && Objects.equals(name, contact.name) && Objects.equals(numberPhone, contact.numberPhone) && Objects.equals(dateTime, contact.dateTime) && Objects.equals(client, contact.client);
+        return id == contact.id && clientStatus == contact.clientStatus && Objects.equals(name, contact.name) && Objects.equals(numberPhone, contact.numberPhone) && Objects.equals(date, contact.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, numberPhone, dateTime, clientStatus, client);
+        return Objects.hash(id, name, numberPhone, date, clientStatus);
     }
 
     @Override
@@ -54,7 +60,7 @@ public class Contact {
         return
                 name + '\n' +
                         " телефон:  " + numberPhone + '\n' +
-                        " дата регистр: " + dateTime + '\n' +
+                        " дата регистр: " + date + '\n' +
                         " статус " + clientStatus + '\n';
     }
 }

@@ -14,6 +14,7 @@ import ru.skypro.shelterforanimals.repository.ContactRepository;
 import ru.skypro.shelterforanimals.repository.VolunteerRepository;
 import ru.skypro.shelterforanimals.service.ContactService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ContactServiceImpl implements ContactService {
         log.info("Сохранение контакта");
         String text = update.message().text();
         long chatId = update.message().chat().id();
-        LocalDateTime localDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        LocalDate localDate = LocalDate.now();
         Client client = clientRepository.findByChatId(chatId);
         Matcher matcher = pattern2.matcher(text);
         if (matcher.matches()) {
@@ -56,8 +57,8 @@ public class ContactServiceImpl implements ContactService {
             Contact contact = new Contact();
             contact.setNumberPhone(phone);
             contact.setName(name);
-            contact.setDateTime(localDateTime);
-            contact.setClient(client);
+            contact.setDate(localDate);
+            contact.setClientStatus(client.getStatus());
             List<Contact> contacts = contactRepository.findContactByNumberPhoneAndName(phone, name);
             log.info(String.valueOf(contacts));
 

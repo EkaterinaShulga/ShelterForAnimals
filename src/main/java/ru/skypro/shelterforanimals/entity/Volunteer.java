@@ -26,6 +26,12 @@ public class Volunteer {
     public Volunteer() {
     }
 
+    public Volunteer(long id, String name, int status, long chatId){
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.chatId = chatId;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

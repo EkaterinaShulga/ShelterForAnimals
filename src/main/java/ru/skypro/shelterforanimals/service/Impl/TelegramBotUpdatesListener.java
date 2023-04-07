@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import ru.skypro.shelterforanimals.repository.*;
 
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -32,20 +33,20 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final UserRepository userRepository;
 
     private final TelegramBot telegramBot;
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
-    private final RecordServiceImpl recordService;
+    private final RecordService recordService;
 
-    private final VolunteerServiceImpl volunteerService;
+    private final VolunteerService volunteerService;
 
-    private final ContactServiceImpl contactService;
+    private final ContactService contactService;
 
     private final ClientService clientService;
     private final PetService petService;
     private final PetPhotoService petPhotoService;
-
-    private final MessageHandlerClient messageHandlerClient;
     private final TableService tableService;
+    private final MessageHandlerClient messageHandlerClient;
+
 
     static public final String CONTACT_TEXT_PATTERN = "([0-9]{11})(\\s)([\\W+]+)";
 
@@ -163,8 +164,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     contactService.saveContact(update);
                     log.info("save contact");
                 } else {
-                    log.info("User не внесён в БД - users");
-                    telegramBot.execute(sendMessage(chatId, USER_NOT_FOUND_MESSAGE.getMessage()));
+                    log.info("Client не внесён в БД - Clients");
+                    telegramBot.execute(sendMessage(chatId, CAN_NOT_SAVE_CONTACT.getMessage()));
                 }
             } else if (inputText.contains("Отчёт за")) {
                 log.info("Вызвал метод для сохранения текстового отчета");
