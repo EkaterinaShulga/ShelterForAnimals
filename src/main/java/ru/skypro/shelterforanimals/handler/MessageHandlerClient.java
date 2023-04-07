@@ -3,21 +3,22 @@ package ru.skypro.shelterforanimals.handler;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.PhotoSize;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.EditMessageText;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.skypro.shelterforanimals.entity.Record;
 import ru.skypro.shelterforanimals.handler.button_answers.VolunteerButtonAnswers;
-import ru.skypro.shelterforanimals.service.*;
 import ru.skypro.shelterforanimals.constants.BotMessageEnum;
 import ru.skypro.shelterforanimals.handler.button_answers.StatusChecker;
 import ru.skypro.shelterforanimals.repository.RecordRepository;
 import ru.skypro.shelterforanimals.repository.UserRepository;
+import ru.skypro.shelterforanimals.service.ContactService;
+import ru.skypro.shelterforanimals.service.PetPhotoService;
+import ru.skypro.shelterforanimals.service.RecordService;
+import ru.skypro.shelterforanimals.service.UserService;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import static ru.skypro.shelterforanimals.constants.BotButtonEnum.*;
 import static ru.skypro.shelterforanimals.constants.BotMessageEnum.*;
@@ -61,7 +62,6 @@ public class MessageHandlerClient {
                     update.callbackQuery().data().equals(BUTTON_EXTRA_TIME.getMessage()) ||
                     update.callbackQuery().data().equals(BUTTON_BED_RECORD.getMessage())) {
                 volunteerButtonAnswers.checkButtonAnswerVolunteer(update);
-                ;
             }
         } else if (update.message().photo() != null) {
             log.info("Photo Upload processing");
@@ -81,8 +81,8 @@ public class MessageHandlerClient {
                 log.info("Таблица с отчетами пуста");
                 if (userService.getUser(update.message().chat().id()) == null) {
                     log.info("Метод добавления фото: Нет пользователя");
-                    telegramBot.execute(sendMessage(update.message().chat().id(), "Сначала необходимо отправить отчёт\n" +
-                            USER_NOT_FOUND_MESSAGE));
+                    telegramBot.execute(sendMessage(update.message().chat().id(),
+                            "Сначала необходимо отправить отчёт" ));
                 } else {
                     telegramBot.execute(sendMessage(update.message().chat().id(), "Сначала необходимо отправить отчёт\n" +
                             BotMessageEnum.DAILY_RECORD_INFO));
@@ -137,8 +137,7 @@ public class MessageHandlerClient {
                 log.info("Таблица с отчетами пуста");
                 if (userRepository.findAllUsersByChatId(update.message().chat().id()).isEmpty()) {
                     log.info("Метод добавления фото: Нет пользователя");
-                    telegramBot.execute(sendMessage(update.message().chat().id(), "Сперва необходимо отправить отчёт\n" +
-                            USER_NOT_FOUND_MESSAGE));
+                    telegramBot.execute(sendMessage(update.message().chat().id(), "Сперва необходимо отправить отчёт"));
                 } else {
                     telegramBot.execute(sendMessage(update.message().chat().id(), "Сперва необходимо отправить отчёт\n" +
                             DAILY_RECORD_INFO));

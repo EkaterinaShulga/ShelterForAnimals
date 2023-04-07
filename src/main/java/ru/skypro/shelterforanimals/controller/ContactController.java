@@ -41,7 +41,7 @@ public class ContactController {
     public ResponseEntity<Optional<Contact>> getContact(@Parameter(description = "id контакта, для корректного поиска нужно указать верный id", required = true, example = "1")
                                                         @PathVariable int id){
         Optional <Contact> contact = contactService.findContactById(id);
-        if(contact .isEmpty() ){
+        if(contact.isEmpty() ){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(contact);

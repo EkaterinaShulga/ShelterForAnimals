@@ -6,7 +6,7 @@ CREATE TABLE Cats
     id        BIGSERIAL PRIMARY KEY,
     name      TEXT,
     age       TEXT,
-    color       TEXT,
+    color     TEXT,
     chat_id   BIGSERIAL,
     cat_Photo TEXT
 );
@@ -24,9 +24,8 @@ CREATE TABLE Contacts
     id            serial PRIMARY KEY,
     name          TEXT,
     number_phone  TEXT,
-    date_time     TIMESTAMP WITHOUT TIME ZONE,
-    client_status int,
-    id_client     bigint references Clients (id) on delete cascade
+    date          DATE,
+    client_status int
 
 );
 
@@ -35,7 +34,7 @@ CREATE TABLE Dogs
     id        BIGSERIAL PRIMARY KEY,
     name      TEXT,
     age       TEXT,
-    color       TEXT,
+    color     TEXT,
     chat_id   BIGSERIAL,
     dog_Photo TEXT
 
@@ -55,13 +54,13 @@ CREATE TABLE Records
 
 CREATE TABLE Pet_Photos
 (
-    pet_Photo_id BIGSERIAL  PRIMARY KEY,
-    file_path     TEXT,
-    file_size     BIGINT,
-    date          DATE,
-    status        int,
-    chat_id       BIGSERIAL,
-        record_id bigint REFERENCES Records (record_id) ON DELETE CASCADE
+    pet_Photo_id BIGSERIAL PRIMARY KEY,
+    file_path    TEXT,
+    file_size    BIGINT,
+    date         DATE,
+    status       int,
+    chat_id      BIGSERIAL,
+    record_id    bigint REFERENCES Records (record_id) ON DELETE CASCADE
 
 );
 

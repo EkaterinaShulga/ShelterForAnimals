@@ -12,9 +12,7 @@ import ru.skypro.shelterforanimals.entity.Volunteer;
 import ru.skypro.shelterforanimals.repository.CatRepository;
 import ru.skypro.shelterforanimals.repository.DogRepository;
 import ru.skypro.shelterforanimals.repository.VolunteerRepository;
-import ru.skypro.shelterforanimals.service.PetPhotoService;
 import ru.skypro.shelterforanimals.service.PetService;
-import ru.skypro.shelterforanimals.service.RecordService;
 
 
 import java.util.regex.Matcher;
