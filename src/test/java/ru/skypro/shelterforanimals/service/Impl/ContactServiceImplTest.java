@@ -42,7 +42,7 @@ public class ContactServiceImplTest {
     private Contact contact;
 
     private List<Contact> contacts;
-    Update update;
+
 
 
     @BeforeEach
@@ -53,6 +53,7 @@ public class ContactServiceImplTest {
        contact.setNumberPhone("89061875572");
        contact.setDate(LocalDate.now());
        contact.setClientStatus(1);
+       contact.setChatId(1300060749);
 
        contacts=new ArrayList<>();
        contacts.add(contact);
@@ -91,7 +92,6 @@ public class ContactServiceImplTest {
 
         String info = replacedJson2("89061877772 Иванов Иван Иванович ");
         Update update = BotUtils.parseUpdate(info);
-        //Client client = clientRepository.findByChatId(update.message().chat().id());
         contactRepository.save(contact);
         verify(tgBot).execute(new SendMessage(update.message().chat().id(), BOT_ANSWER_NOT_SAVED_CONTACT.getMessage()));
     }

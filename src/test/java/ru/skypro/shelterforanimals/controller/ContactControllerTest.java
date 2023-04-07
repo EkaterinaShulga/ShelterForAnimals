@@ -42,6 +42,7 @@ public class ContactControllerTest {
 
     JSONObject jsonContact = new JSONObject();
     private final int id = 1;
+    private final long chatId = 1300060749;
     private final String name = "Иванов Иван Иванович";
     private final String numberPhone = "89061875572";
     private final LocalDate  date = LocalDate.of(2023,4,5);
@@ -50,7 +51,7 @@ public class ContactControllerTest {
 
     private final int clientStatus = 2;
 
-    Contact contact = new Contact(1, "Иванов Иван Иванович", "89061875572", date, 2);
+    Contact contact = new Contact(1,1300060749, "Иванов Иван Иванович", "89061875572", date, 2);
     @Test
     public void getContactByIdTestPositive() throws Exception {
 
@@ -61,6 +62,7 @@ public class ContactControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.chatId").value(chatId))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.numberPhone").value(numberPhone))
                 .andExpect(jsonPath("$.date").value(date2))

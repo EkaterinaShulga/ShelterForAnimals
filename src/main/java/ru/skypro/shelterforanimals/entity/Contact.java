@@ -23,6 +23,8 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private long chatId;
     private String name;
     private String numberPhone;
 
@@ -30,11 +32,13 @@ public class Contact {
 
     private int clientStatus;
 
+
     public Contact() {
     }
 
-    public Contact(int id, String name, String numberPhone, LocalDate date, int clientStatus){
+    public Contact(int id, long chatId, String name, String numberPhone, LocalDate date, int clientStatus){
         this.id = id;
+        this.chatId = chatId;
         this.name = name;
         this.numberPhone = numberPhone;
         this.date = date;
@@ -60,6 +64,7 @@ public class Contact {
         return
                 name + '\n' +
                         " телефон:  " + numberPhone + '\n' +
+                        " chatId:  " + chatId + '\n' +
                         " дата регистр: " + date + '\n' +
                         " статус " + clientStatus + '\n';
     }

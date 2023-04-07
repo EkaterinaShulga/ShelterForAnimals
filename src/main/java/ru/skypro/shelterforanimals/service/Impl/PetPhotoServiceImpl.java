@@ -10,6 +10,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.skypro.shelterforanimals.entity.PetPhoto;
 import ru.skypro.shelterforanimals.entity.Record;
@@ -158,8 +159,9 @@ public class PetPhotoServiceImpl implements PetPhotoService {
      * need to send a photo of the pet
      */
 
-    //  @Scheduled(cron = "0 0/2 * * * *") //проверка фото происходит один раз в сутки
-    public void checkPhotoAndSendReminder() {
+      @Scheduled(cron = "0 0/2 * * * *") //проверка фото происходит один раз в сутки
+    public void checkPhotoAndSendReminderForUser() {
+          log.info("PetPhotoServiceImpl - checkPhotoAndSendReminderForUser()");
         List<Volunteer> allVolunteers = volunteerRepository.findAll();//все волонтеры
         List<User> allUsers = userRepository.findAll();//все усыновители
         LocalDate dateNow = LocalDate.now();//дата проверки фото
@@ -167,19 +169,19 @@ public class PetPhotoServiceImpl implements PetPhotoService {
             long chatIdUser = user.getChatId();//берем чат айди усыновителя
             int status = user.getStatus();//берем статус усыновителя
             List<PetPhoto> photos = petPhotoRepository.getAllByChatId(chatIdUser);//выгружает все фото по данному  chatId и потом нужный ищет по дате
-            if (photos != null) {//если фото есть
+             if (photos != null) {//если фото есть
                 for (PetPhoto photo : photos) {
                     LocalDate dateOfRecord = photo.getDate();//ищем дату каждого фото
                     if (!dateOfRecord.equals(dateNow)) {//если с текущей датой фото нет - бот отпавляет напоминание усыновителю
                         System.out.println(dateNow + " dateNow");
                         telegramBot.execute(new SendMessage(chatIdUser, PHOTO.getMessage() + dateNow));
                         log.info("Пользователю направлено напоминание о необходимости прислать фото питомца за конкретный день");
-                    }
-                }
-                for (Volunteer volunteer : allVolunteers) {
-                    if (volunteer.getStatus() == status) {
-                        telegramBot.execute(new SendMessage(volunteer.getChatId(),
-                                "отправил усыновителю напоминание о том, что нужно прилать отчет за  " + dateNow));
+                        for (Volunteer volunteer : allVolunteers) {
+                            if (volunteer.getStatus() == status) {
+                                telegramBot.execute(new SendMessage(volunteer.getChatId(),
+                                        "отправил усыновителю напоминание о том, что нужно прислать фото за  " + dateNow));
+                            }
+                        }
                     }
                 }
             } else {
